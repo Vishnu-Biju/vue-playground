@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Color Switcher</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        #app {
+          text-align: center;
+          padding: 20px;
+        }
+        .box {
+          width: 150px;
+          height: 150px;
+          margin: 20px auto;
+          border-radius: 10px;
+          transition: background-color 0.3s;
+        }
+        button {
+          margin: 0 5px;
+          padding: 8px 16px;
+          cursor: pointer;
+        }
+      </style>
+</head>
+<body>
+    <div id="app">
+        <h1>Color Switcher</h1>
+        <div class="box" :style="{ backgroundColor: color }"></div>
+
+        <button @click="changeColor('tomato')">Tomato</button>
+        <button @click="changeColor('skyblue')">Sky Blue</button>
+        <button @click="changeColor('limegreen')">Lime Green</button>
+        <button @click="changeColor('#555')">Dark</button>
+        <button @click="resetColor">Reset</button>
+    </div>
+    <script>
+        const { createApp, ref } = Vue
+    
+        createApp({
+          setup() {
+            const color = ref('lightgray')
+    
+            function changeColor(newColor) {
+              color.value = newColor
+            }
+    
+            function resetColor() {
+              color.value = 'lightgray'
+            }
+    
+            return { color, changeColor, resetColor }
+          }
+        }).mount('#app')
+      </script>
+</body>
+</html>
