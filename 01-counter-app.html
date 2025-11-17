@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Counter App</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>{{ title }}</h1>
+
+    <h2>Counter: {{ count }}</h2>
+
+    <button @click="count--">-</button>
+    <button @click="count++">+</button>
+    <button @click="reset">Reset</button>
+
+    <hr />
+
+    <input v-model="message" placeholder="Type something..." />
+    <p>You typed: {{ message }}</p>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue
+
+    createApp({
+      setup() {
+        const title = ref("My Vue Counter App")
+        const count = ref(0)
+        const message = ref("")
+
+        const reset = () => {
+          count.value = 0
+        }
+
+        return {
+          title,
+          count,
+          message,
+          reset,
+        }
+      }
+    }).mount("#app")
+  </script>
+</body>
+</html>
