@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Vue API Example</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    #app { max-width: 400px; margin: 0 auto; }
+    button { margin-top: 10px; padding: 8px 16px; cursor: pointer; }
+    .loading { color: gray; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <h1>Random Joke Generator</h1>
+
+    <p v-if="loading" class="loading">Loading...</p>
+    <p v-else-if="error" class="error">{{ error }}</p>
+    <p v-else>
+      <strong>{{ joke.setup }}</strong><br />
+      {{ joke.delivery }}
+    </p>
+
+    <button @click="fetchJoke">Get Another Joke</button>
+  </div>
+
+  <script>
+    const { createApp, ref, onMounted } = Vue
+
+    createApp({
+      setup() {
+        const joke = ref({})
+        const loading = ref(false)
+        const error = ref(null)
+
+        async function fetchJoke() {
+          loading.value = true
+          error.value = null
+
+          try {
+            const res = await fetch('https://v2.jokeapi.dev/joke/Any?type=twopart')
+            if (!res.ok) throw new Error('Failed to fetch joke')
+            joke.value = await res.json()
+          } catch (err) {
+            error.value = err.message
+          } finally {
+            loading.value = false
+          }
+        }
+
+        onMounted(fetchJoke)
+
+        return { joke, loading, error, fetchJoke }
+      }
+    }).mount('#app')
+  </script>
+</body>
+</html>
