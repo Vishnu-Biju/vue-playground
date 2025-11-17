@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      #app {
+        padding: 20px;
+        text-align: center;
+      }
+
+      button {
+        padding: 8px 16px;
+        cursor: pointer;
+      }
+      .overlay {
+        position: fixed;
+        inset: 0; 
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        min-width: 260px;
+        max-width: 90%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        text-align: left;
+      }
+
+      .modal-header {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .modal-footer {
+        margin-top: 15px;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Modal Example</h1>
+
+      <button @click="isOpen = true">Open Modal</button>
+      <div class="overlay" v-if="isOpen">
+        <div class="modal">
+          <div class="modal-header">
+            Simple Modal
+          </div>
+          <div class="modal-body">
+            <p>This is a basic modal made with Vue.</p>
+            <p>You can put any content you want here.</p>
+          </div>
+          <div class="modal-footer">
+            <button @click="isOpen = false">Close</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <script>
+        const { createApp, ref } = Vue
+    
+        createApp({
+          setup() {
+            const isOpen = ref(false)
+    
+            return { isOpen }
+          }
+        }).mount('#app')
+      </script>
+  </body>
+</html>
